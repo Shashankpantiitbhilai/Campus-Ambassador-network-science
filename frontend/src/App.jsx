@@ -100,7 +100,15 @@ const App = () => {
     setError(null);
     
     try {
-      const res = await axios.post("http://localhost:5000/api/relevance", {
+        const MODE = process.env.REACT_APP_MODE || process.env.NODE_ENV;
+
+        const baseURL =
+          MODE === "development"
+            ? process.env.REACT_APP_DEV_API_URL
+            : process.env.REACT_APP_PROD_API_URL;
+        
+        const res = await axios.post(`${baseURL}/api/relevance`, {
+        
         jobDescription: jobDesc,
       });
       
@@ -218,7 +226,7 @@ const App = () => {
             </Box>
             
             <Typography variant="body1" color="text.secondary" paragraph>
-              Enter the job description for an ambassador role, and our AI agent will analyze it and assign 
+              Enter the job description for an ambassador role, and we will analyze it and assign 
               importance scores to various student clubs based on their relevance for network analysis.
             </Typography>
             
